@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="repository.ClubMapper">
+    <resultMap id="Club" type="Club">
+        <result property="owner_name" column="nick_name"/>
+    </resultMap>
+    <insert id="insertClub">
+        insert into clubs(owner_id,club_name,introduce)
+        values(#{owner_id},#{club_name},#{introduce})
+    </insert>
+    <insert id="joinClub">
+        insert into user_club(user_id, club_id)
+        values (#{0},#{1});
+    </insert>
+
+    <select id="getClubByName" resultType="Club">
+        select id from clubs
+        where club_name = #{name}
+          and deleted = false
+    </select>
+    <select id="getClubs" resultMap="Club">
+        select c.id, c.owner_id, c. club_name, c.introduce, c.member_num, c.created_at, u.nick_name from clubs c
+        join users u on c.owner_id = u.id
+        where c.deleted = false
+    </select>
+    <select id="getClubById" resultType="Club">
+        select id, owner_id, club_name, introduce, member_num, created_at from clubs
+        where id = #{id}
+          and deleted = false
+    </select>
+    <select id="getJoinedStatus" resultType="Boolean">
+        select deleted from user_club
+        where user_id = #{0} and club_id = #{1}
+    </select>
+    <select id="getJoinedClubs" resultType="Club">
+        select c.* from clubs c
+        join user_club uc on c.id = uc.club_id
+        where c.deleted = false
+          and uc.deleted = false
+          and uc.user_id = #{0}
+    </select>
+
+    <update id="increaseMember">
+        update clubs
+        set member_num = member_num+1,
+            updated_at = now()
+        where id = #{clubid}
+    </update>
+    <update id="updateClub">
+        update clubs
+        set club_name = #{club_name},
+            introduce = #{introduce},
+            updated_at = now()
+        where id = #{id}
+    </update>
+    <update id="softDeleteClub">
+        update clubs
+        set deleted = true,
+            updated_at = now()
+        where id = #{id}
+    </update>
+    <update id="rejoinClub">
+        update user_club
+        set deleted = false,
+            updated_at = now()
+        where user_id = #{0} and club_id = #{1}
+    </update>
+    <update id="withdrawalClub">
+        update user_club
+        set deleted = true,
+            updated_at = now()
+        where user_id = #{0} and club_id = #{1}
+    </update>
+    <update id="decreaseMember">
+        update clubs
+        set member_num = member_num - 1,
+            updated_at = now()
+        where id = #{clubid}
+    </update>
+</mapper>
