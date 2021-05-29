@@ -1,7 +1,6 @@
-package service;
+package serviceimpl;
 
 import domain.Club;
-import domain.Post;
 import domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import repository.BoardMapper;
 import repository.ClubMapper;
 import repository.UserMapper;
+import service.ClubService;
 import util.MyUtil;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package service;
+package serviceimpl;
 
 import domain.Board;
 import domain.Post;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import repository.BoardMapper;
 import repository.ClubMapper;
 import repository.PostMapper;
+import service.PostService;
 import util.MyUtil;
 
 import javax.servlet.http.HttpSession;

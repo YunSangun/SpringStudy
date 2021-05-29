@@ -1,4 +1,4 @@
-package service;
+package serviceimpl;
 
 import domain.Board;
 import domain.Comment;
@@ -9,6 +9,7 @@ import repository.BoardMapper;
 import repository.ClubMapper;
 import repository.CommentMapper;
 import repository.PostMapper;
+import service.CommentService;
 import util.MyUtil;
 
 import java.util.List;
